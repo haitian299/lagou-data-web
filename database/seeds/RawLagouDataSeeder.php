@@ -118,7 +118,37 @@ class RawLagouDataSeeder extends Seeder
 
     public function processRawJobs()
     {
-        $closure = function ($jobs) {
+        $typeIds = array_flatten(\App\Models\JobType::select('id')->get()->toArray());
+        $typeValues = array_flatten(\App\Models\JobType::select('name')->get()->toArray());
+        $types = array_combine($typeValues, $typeIds);
+
+        $firstTypeIds = array_flatten(\App\Models\JobFirstType::select('id')->get()->toArray());
+        $firstTypeValues = array_flatten(\App\Models\JobFirstType::select('name')->get()->toArray());
+        $firstTypes = array_combine($firstTypeValues, $firstTypeIds);
+
+        $expDmdIds = array_flatten(\App\Models\JobExperienceDemand::select('id')->get()->toArray());
+        $expDmdValues = array_flatten(\App\Models\JobExperienceDemand::select('name')->get()->toArray());
+        $expDmds = array_combine($expDmdValues, $expDmdIds);
+
+        $eduDmdIds = array_flatten(\App\Models\JobEducationDemand::select('id')->get()->toArray());
+        $eduDmdValues = array_flatten(\App\Models\JobEducationDemand::select('name')->get()->toArray());
+        $eduDmds = array_combine($eduDmdValues, $eduDmdIds);
+
+        $cityIds = array_flatten(\App\Models\City::select('id')->get()->toArray());
+        $cityValues = array_flatten(\App\Models\City::select('name')->get()->toArray());
+        $cities = array_combine($cityValues, $cityIds);
+
+        $contractTypeIds = array_flatten(\App\Models\ContractType::select('id')->get()->toArray());
+        $contractTypeValues = array_flatten(\App\Models\ContractType::select('name')->get()->toArray());
+        $contractTypes = array_combine($contractTypeValues, $contractTypeIds);
+        $closure = function ($jobs) use (
+            $types,
+            $firstTypes,
+            $expDmds,
+            $eduDmds,
+            $cities,
+            $contractTypes
+        ) {
             foreach ($jobs as $job) {
                 $attribute['id'] = $job->id;
                 $attribute['name'] = $job->name;
@@ -130,44 +160,38 @@ class RawLagouDataSeeder extends Seeder
                 $attribute['address'] = $job->address;
                 $attribute['detail'] = $job->detail;
 
-                $type = \App\Models\JobType::where('name', $job->type)->first();
-                if ($type) {
-                    $attribute['type_id'] = $type->id;
+                if ($type = array_search($job->type, $types)) {
+                    $attribute['type_id'] = $type;
                 } else {
                     $attribute['type_id'] = null;
                 }
 
-                $firstType = \App\Models\JobFirstType::where('name', $job->first_type)->first();
-                if ($firstType) {
-                    $attribute['first_type_id'] = $firstType->id;
+                if ($firstType = array_search($job->first_type, $firstTypes)) {
+                    $attribute['first_type_id'] = $firstType;
                 } else {
                     $attribute['first_type_id'] = null;
                 }
 
-                $expDmd = \App\Models\JobExperienceDemand::where('name', $job->experience_demand)->first();
-                if ($expDmd) {
-                    $attribute['experience_demand_id'] = $expDmd->id;
+                if ($expDmd = array_search($job->experience_demand, $expDmds)) {
+                    $attribute['experience_demand_id'] = $expDmd;
                 } else {
                     $attribute['experience_demand_id'] = null;
                 }
 
-                $eduDmd = \App\Models\JobEducationDemand::where('name', $job->education_demand)->first();
-                if ($eduDmd) {
-                    $attribute['education_demand_id'] = $eduDmd->id;
+                if ($eduDmd = array_search($job->education_demand, $eduDmds)) {
+                    $attribute['education_demand_id'] = $eduDmd;
                 } else {
                     $attribute['education_demand_id'] = null;
                 }
 
-                $city = \App\Models\City::where('name', $job->city)->first();
-                if ($city) {
+                if ($city = array_search($job->city, $cities)) {
                     $attribute['city_id'] = $city->id;
                 } else {
                     $attribute['city_id'] = null;
                 }
 
-                $contractType = \App\Models\ContractType::where('name', $job->contract_type)->first();
-                if ($contractType) {
-                    $attribute['contract_type_id'] = $contractType->id;
+                if ($contractType = array_search($job->contract_type, $contractTypes)) {
+                    $attribute['contract_type_id'] = $contractType;
                 } else {
                     $attribute['contract_type_id'] = null;
                 }
@@ -181,7 +205,28 @@ class RawLagouDataSeeder extends Seeder
 
     public function processRawCompanies()
     {
-        $closure = function ($companies) {
+        $cityIds = array_flatten(\App\Models\City::select('id')->get()->toArray());
+        $cityValues = array_flatten(\App\Models\City::select('name')->get()->toArray());
+        $cities = array_combine($cityValues, $cityIds);
+
+        $populationIds = array_flatten(\App\Models\CompanyPopulation::select('id')->get()->toArray());
+        $populationValues = array_flatten(\App\Models\CompanyPopulation::select('name')->get()->toArray());
+        $populations = array_combine($populationValues, $populationIds);
+
+        $financeStageIds = array_flatten(\App\Models\CompanyFinanceStage::select('id')->get()->toArray());
+        $financeStageValues = array_flatten(\App\Models\CompanyFinanceStage::select('name')->get()->toArray());
+        $financeStages = array_combine($financeStageValues, $financeStageIds);
+
+        $financeStageProcessIds = array_flatten(\App\Models\CompanyFinanceStageProcess::select('id')->get()->toArray());
+        $financeStageProcessValues = array_flatten(\App\Models\CompanyFinanceStageProcess::select('name')->get()->toArray());
+        $financeStageProcesses = array_combine($financeStageProcessValues, $financeStageProcessIds);
+
+        $closure = function ($companies) use (
+            $cities,
+            $populations,
+            $financeStages,
+            $financeStageProcesses
+        ) {
             foreach ($companies as $company) {
                 $attribute['id'] = $company->id;
                 $attribute['name'] = $company->name;
@@ -191,30 +236,26 @@ class RawLagouDataSeeder extends Seeder
                 $attribute['days_cost_to_process'] = $company->days_cost_to_process;
                 $attribute['labels'] = $company->labels;
 
-                $city = \App\Models\City::where('name', $company->city)->first();
-                if ($city) {
-                    $attribute['city_id'] = $city->id;
+                if ($city = array_search($company->city, $cities)) {
+                    $attribute['city_id'] = $city;
                 } else {
                     $attribute['city_id'] = null;
                 }
 
-                $population = \App\Models\CompanyPopulation::where('name', $company->population)->first();
-                if ($population) {
-                    $attribute['population_id'] = $population->id;
+                if ($population = array_search($company->population, $populations)) {
+                    $attribute['population_id'] = $population;
                 } else {
                     $attribute['population_id'] = null;
                 }
 
-                $financeStage = \App\Models\CompanyFinanceStage::where('name', $company->finance_stage)->first();
-                if ($financeStage) {
-                    $attribute['finance_stage_id'] = $financeStage->id;
+                if ($financeStage = array_search($company->finance_stage, $financeStages)) {
+                    $attribute['finance_stage_id'] = $financeStage;
                 } else {
                     $attribute['finance_stage_id'] = null;
                 }
 
-                $financeStageProcess = \App\Models\CompanyFinanceStageProcess::where('name', $company->finance_stage_process)->first();
-                if ($financeStageProcess) {
-                    $attribute['finance_stage_process_id'] = $financeStageProcess->id;
+                if ($financeStageProcess = array_search($company->finance_stage_process, $financeStageProcesses)) {
+                    $attribute['finance_stage_process_id'] = $financeStageProcess;
                 } else {
                     $attribute['finance_stage_process_id'] = null;
                 }
@@ -236,6 +277,5 @@ class RawLagouDataSeeder extends Seeder
             }
         };
         DB::table('lagou_company')->chunk(100, $closure);
-
     }
 }
