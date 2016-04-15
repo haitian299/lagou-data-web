@@ -23,6 +23,7 @@ class CreateCompaniesTable extends Migration
             $table->tinyInteger('days_cost_to_process')->unsigned()->nullable();
             $table->integer('finance_stage_id')->unsigned()->nullable();
             $table->integer('finance_stage_process_id')->unsigned()->nullable();
+            $table->string('labels');
             $table->timestamps();
             $table->primary('id');
         });

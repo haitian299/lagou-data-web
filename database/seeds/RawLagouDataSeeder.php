@@ -71,20 +71,6 @@ class RawLagouDataSeeder extends Seeder
             }
         }
 
-        $labels = DB::table('lagou_company')
-            ->select('labels as name')
-            ->groupBy('labels')
-            ->get();
-        $labels = $this->processRawValues($labels);
-        foreach ($labels as $label) {
-            $items = explode(',', $label['name']);
-            foreach ($items as $item) {
-                \App\Models\CompanyLabel::firstOrCreate([
-                    'name' => trim($item)
-                ]);
-            }
-        }
-
         $this->processRawJobs();
         $this->processRawCompanies();
 
@@ -200,6 +186,7 @@ class RawLagouDataSeeder extends Seeder
             $attribute['logo'] = $company->logo;
             $attribute['job_process_rate_timely'] = $company->job_process_rate_timely;
             $attribute['days_cost_to_process'] = $company->days_cost_to_process;
+            $attribute['labels'] = $company->labels;
 
             $city = \App\Models\City::where('name', $company->city)->first();
             if ($city) {
@@ -229,7 +216,19 @@ class RawLagouDataSeeder extends Seeder
                 $attribute['finance_stage_process_id'] = null;
             }
 
-            \App\Models\Company::create($attribute);
+            $savedCompany = \App\Models\Company::create($attribute);
+
+            $industryArray = explode(',', $company->industries);
+            array_walk($industryArray, function (&$value) {
+                $value = trim($value);
+            });
+            $industries = \App\Models\CompanyIndustry::select('id')
+                ->whereIn(
+                    'name',
+                    $industryArray
+                )->get();
+            $industries = array_flatten($industries->toArray());
+            $savedCompany->industries()->sync($industries);
 
         }
     }
