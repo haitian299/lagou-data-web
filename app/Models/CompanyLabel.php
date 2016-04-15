@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class CompanyLabel extends Model
+class CompanyLabel extends ImprovedModel
 {
+    protected $table   = 'company_labels';
     protected $guarded = ['id'];
+    public $timestamps = false;
 }

@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class CompanyFinanceStage extends Model
+class CompanyFinanceStage extends ImprovedModel
 {
+    protected $table   = 'company_finance_stages';
     protected $guarded = ['id'];
+    public $timestamps = false;
 }

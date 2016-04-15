@@ -1,10 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class JobType extends Model
+class JobType extends ImprovedModel
 {
-    //
+    protected $table   = 'job_types';
+    protected $guarded = [];
+    public $timestamps = false;
 }

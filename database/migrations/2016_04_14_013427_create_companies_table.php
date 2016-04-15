@@ -17,12 +17,12 @@ class CreateCompaniesTable extends Migration
             $table->string('name');
             $table->string('short_name');
             $table->string('logo');
-            $table->integer('city')->unsigned();
-            $table->integer('population')->unsigned();
+            $table->integer('city_id')->unsigned()->nullable();
+            $table->integer('population_id')->unsigned()->nullable();
             $table->tinyInteger('job_process_rate_timely')->unsigned()->nullable();
             $table->tinyInteger('days_cost_to_process')->unsigned()->nullable();
-            $table->integer('finance_stage')->unsigned();
-            $table->integer('finance_stage_process')->nullable();
+            $table->integer('finance_stage_id')->unsigned()->nullable();
+            $table->integer('finance_stage_process_id')->unsigned()->nullable();
             $table->timestamps();
             $table->primary('id');
         });

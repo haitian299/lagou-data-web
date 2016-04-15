@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class JobExperienceDemand extends Model
+class JobExperienceDemand extends ImprovedModel
 {
+    protected $table   = 'job_experience_demands';
     protected $guarded = ['id'];
+    public $timestamps = false;
 }

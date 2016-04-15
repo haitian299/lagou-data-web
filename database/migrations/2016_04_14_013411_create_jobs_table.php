@@ -15,15 +15,15 @@ class CreateJobsTable extends Migration
         Schema::create('jobs', function (Blueprint $table) {
             $table->integer('id')->unsigned();
             $table->string('name');
-            $table->integer('type_id')->unsigned();
+            $table->integer('type_id')->unsigned()->nullable();
             $table->tinyInteger('salary_min');
             $table->tinyInteger('salary_max');
-            $table->integer('first_type_id')->unsigned();
-            $table->integer('experience_demand_id')->unsigned();
-            $table->integer('city_id')->unsigned();
-            $table->integer('education_demand_id')->unsigned();
+            $table->integer('first_type_id')->unsigned()->nullable();
+            $table->integer('experience_demand_id')->unsigned()->nullable();
+            $table->integer('city_id')->unsigned()->nullable();
+            $table->integer('education_demand_id')->unsigned()->nullable();
             $table->integer('company_id');
-            $table->integer('contract_type_id')->unsigned();
+            $table->integer('contract_type_id')->unsigned()->nullable();
             $table->string('advantage');
             $table->timestamp('create_time')->nullable();
             $table->string('address');

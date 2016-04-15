@@ -54,7 +54,7 @@ class JobAndCompanyAttributes extends Migration
             $table->increments('id');
             $table->string('name');
         });
-        Schema::create('job_experience_demand', function (Blueprint $table) {
+        Schema::create('job_experience_demands', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
         });

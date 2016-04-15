@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class ContractType extends Model
+class ContractType extends ImprovedModel
 {
+    protected $table   = 'contract_types';
     protected $guarded = ['id'];
+    public $timestamps = false;
 }
