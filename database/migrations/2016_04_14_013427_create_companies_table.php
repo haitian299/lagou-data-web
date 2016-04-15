@@ -13,7 +13,7 @@ class CreateCompaniesTable extends Migration
     public function up()
     {
         Schema::create('companies', function (Blueprint $table) {
-            $table->integer('id')->unsigned();
+            $table->increments('id');
             $table->string('name');
             $table->string('short_name');
             $table->string('logo');
@@ -25,7 +25,6 @@ class CreateCompaniesTable extends Migration
             $table->integer('finance_stage_process_id')->unsigned()->nullable();
             $table->string('labels');
             $table->timestamps();
-            $table->primary('id');
         });
     }
 

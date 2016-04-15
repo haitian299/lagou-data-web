@@ -172,6 +172,7 @@ class RawLagouDataSeeder extends Seeder
                     $attribute['contract_type_id'] = null;
                 }
                 \App\Models\Job::create($attribute);
+                echo "saved job " . $job->id . "\n";
             }
         };
         DB::table('lagou_job')->chunk(100, $closure);
@@ -218,22 +219,19 @@ class RawLagouDataSeeder extends Seeder
                     $attribute['finance_stage_process_id'] = null;
                 }
 
-                \App\Models\Company::create($attribute);
+                $savedCompany = \App\Models\Company::create($attribute);
 
                 $industryArray = explode(',', $company->industries);
                 array_walk($industryArray, function (&$value) {
                     $value = trim($value);
                 });
-                $industries = \App\Models\CompanyIndustry::select('id as industry_id')
+                $industries = \App\Models\CompanyIndustry::select('id')
                     ->whereIn(
                         'name',
                         $industryArray
                     )->get();
-                $industries = $industries->toArray();
-                array_walk($industries, function (&$value) use ($company) {
-                    $value['company_id'] = $company->id;
-                });
-                DB::table('company_industry_relations')->insert($industries);
+                $industries = array_flatten($industries->toArray());
+                $savedCompany->industries()->sync($industries);
                 echo "saved company " . $company->id . "\n";
             }
         };

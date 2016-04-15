@@ -13,7 +13,7 @@ class CreateJobsTable extends Migration
     public function up()
     {
         Schema::create('jobs', function (Blueprint $table) {
-            $table->integer('id')->unsigned();
+            $table->increments('id');
             $table->string('name');
             $table->integer('type_id')->unsigned()->nullable();
             $table->tinyInteger('salary_min');
@@ -29,7 +29,6 @@ class CreateJobsTable extends Migration
             $table->string('address');
             $table->longText('detail');
             $table->timestamps();
-            $table->primary('id');
         });
     }
 
