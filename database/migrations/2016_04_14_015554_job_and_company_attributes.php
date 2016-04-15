@@ -29,9 +29,8 @@ class JobAndCompanyAttributes extends Migration
             $table->string('name');
         });
         Schema::create('company_industry_relations', function (Blueprint $table) {
-            $table->integer('company_id');
-            $table->integer('industry_id');
-            $table->primary(['company_id', 'industry_id']);
+            $table->integer('company_id')->unsigned()->nullable();
+            $table->integer('industry_id')->unsigned()->nullable();
         });
         Schema::create('company_populations', function (Blueprint $table) {
             $table->increments('id');
