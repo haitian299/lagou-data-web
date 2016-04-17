@@ -56,7 +56,6 @@ class JobAndCompanyAttributes extends Migration
         Schema::create('job_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('job_first_type_id')->unsigned();
         });
 
     }
