@@ -120,27 +120,27 @@ class RawLagouDataSeeder extends Seeder
     {
         $typeIds = array_flatten(\App\Models\JobType::select('id')->get()->toArray());
         $typeValues = array_flatten(\App\Models\JobType::select('name')->get()->toArray());
-        $types = array_combine($typeValues, $typeIds);
+        $types = array_combine($typeIds, $typeValues);
 
         $firstTypeIds = array_flatten(\App\Models\JobFirstType::select('id')->get()->toArray());
         $firstTypeValues = array_flatten(\App\Models\JobFirstType::select('name')->get()->toArray());
-        $firstTypes = array_combine($firstTypeValues, $firstTypeIds);
+        $firstTypes = array_combine($firstTypeIds, $firstTypeValues);
 
         $expDmdIds = array_flatten(\App\Models\JobExperienceDemand::select('id')->get()->toArray());
         $expDmdValues = array_flatten(\App\Models\JobExperienceDemand::select('name')->get()->toArray());
-        $expDmds = array_combine($expDmdValues, $expDmdIds);
+        $expDmds = array_combine($expDmdIds, $expDmdValues);
 
         $eduDmdIds = array_flatten(\App\Models\JobEducationDemand::select('id')->get()->toArray());
         $eduDmdValues = array_flatten(\App\Models\JobEducationDemand::select('name')->get()->toArray());
-        $eduDmds = array_combine($eduDmdValues, $eduDmdIds);
+        $eduDmds = array_combine($eduDmdIds, $eduDmdValues);
 
         $cityIds = array_flatten(\App\Models\City::select('id')->get()->toArray());
         $cityValues = array_flatten(\App\Models\City::select('name')->get()->toArray());
-        $cities = array_combine($cityValues, $cityIds);
+        $cities = array_combine($cityIds, $cityValues);
 
         $contractTypeIds = array_flatten(\App\Models\ContractType::select('id')->get()->toArray());
         $contractTypeValues = array_flatten(\App\Models\ContractType::select('name')->get()->toArray());
-        $contractTypes = array_combine($contractTypeValues, $contractTypeIds);
+        $contractTypes = array_combine($contractTypeIds, $contractTypeValues);
         $closure = function ($jobs) use (
             $types,
             $firstTypes,
@@ -185,7 +185,7 @@ class RawLagouDataSeeder extends Seeder
                 }
 
                 if ($city = array_search($job->city, $cities)) {
-                    $attribute['city_id'] = $city->id;
+                    $attribute['city_id'] = $city;
                 } else {
                     $attribute['city_id'] = null;
                 }
@@ -207,19 +207,19 @@ class RawLagouDataSeeder extends Seeder
     {
         $cityIds = array_flatten(\App\Models\City::select('id')->get()->toArray());
         $cityValues = array_flatten(\App\Models\City::select('name')->get()->toArray());
-        $cities = array_combine($cityValues, $cityIds);
+        $cities = array_combine($cityIds, $cityValues);
 
         $populationIds = array_flatten(\App\Models\CompanyPopulation::select('id')->get()->toArray());
         $populationValues = array_flatten(\App\Models\CompanyPopulation::select('name')->get()->toArray());
-        $populations = array_combine($populationValues, $populationIds);
+        $populations = array_combine($populationIds, $populationValues);
 
         $financeStageIds = array_flatten(\App\Models\CompanyFinanceStage::select('id')->get()->toArray());
         $financeStageValues = array_flatten(\App\Models\CompanyFinanceStage::select('name')->get()->toArray());
-        $financeStages = array_combine($financeStageValues, $financeStageIds);
+        $financeStages = array_combine($financeStageIds, $financeStageValues);
 
         $financeStageProcessIds = array_flatten(\App\Models\CompanyFinanceStageProcess::select('id')->get()->toArray());
         $financeStageProcessValues = array_flatten(\App\Models\CompanyFinanceStageProcess::select('name')->get()->toArray());
-        $financeStageProcesses = array_combine($financeStageProcessValues, $financeStageProcessIds);
+        $financeStageProcesses = array_combine($financeStageProcessIds, $financeStageProcessValues);
 
         $closure = function ($companies) use (
             $cities,
