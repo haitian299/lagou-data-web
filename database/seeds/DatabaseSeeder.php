@@ -11,6 +11,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-         $this->call(RawLagouDataSeeder::class);
+//         $this->call(RawLagouDataSeeder::class);
+        $this->call(ElasticSearchSeeder::class);
     }
 }
