@@ -30,26 +30,30 @@ class ElasticSearchSeeder extends Seeder
         $indexParams = [
             'index' => 'lagou',
             'body'  => [
-                'mapping' => [
+                'mappings' => [
                     'job'     => [
                         '_source'    => [
                             'enabled' => true
                         ],
                         'properties' => [
                             "address"           => [
-                                "type" => "string"
+                                "type"     => "string",
+                                "analyzer" => "ik_smart"
                             ],
                             "advantage"         => [
-                                "type" => "string"
+                                "type"     => "string",
+                                "analyzer" => "ik_smart"
                             ],
                             "city"              => [
-                                "type" => "string"
+                                "type"  => "string",
+                                "index" => "not_analyzed"
                             ],
                             "company_id"        => [
                                 "type" => "long"
                             ],
                             "contract_type"     => [
-                                "type" => "string"
+                                "type"  => "string",
+                                "index" => "not_analyzed"
                             ],
                             "create_time"       => [
                                 "type"   => "date",
@@ -60,22 +64,27 @@ class ElasticSearchSeeder extends Seeder
                                 "format" => "yyy-MM-dd HH:mm:ss"
                             ],
                             "detail"            => [
-                                "type" => "string"
+                                "type"     => "string",
+                                "analyzer" => "ik_smart"
                             ],
                             "education_demand"  => [
-                                "type" => "string"
+                                "type"  => "string",
+                                "index" => "not_analyzed"
                             ],
                             "experience_demand" => [
-                                "type" => "string"
+                                "type"  => "string",
+                                "index" => "not_analyzed"
                             ],
                             "first_type"        => [
-                                "type" => "string"
+                                "type"  => "string",
+                                "index" => "not_analyzed"
                             ],
                             "id"                => [
                                 "type" => "long"
                             ],
                             "name"              => [
-                                "type" => "string"
+                                "type"     => "string",
+                                "analyzer" => "ik_smart"
                             ],
                             "salary_max"        => [
                                 "type" => "integer"
@@ -84,7 +93,8 @@ class ElasticSearchSeeder extends Seeder
                                 "type" => "integer"
                             ],
                             "type"              => [
-                                "type" => "string"
+                                "type"  => "string",
+                                "index" => "not_analyzed"
                             ],
                             "updated_at"        => [
                                 "type"   => "date",
@@ -98,7 +108,8 @@ class ElasticSearchSeeder extends Seeder
                         ],
                         'properties' => [
                             "city"                    => [
-                                "type" => "string"
+                                "type"  => "string",
+                                "index" => "not_analyzed"
                             ],
                             "created_at"              => [
                                 "type"   => "date",
@@ -108,16 +119,20 @@ class ElasticSearchSeeder extends Seeder
                                 "type" => "long"
                             ],
                             "name"                    => [
-                                "type" => "string"
+                                "type"     => "string",
+                                "analyzer" => "ik_smart"
                             ],
                             "short_name"              => [
-                                "type" => "string"
+                                "type"     => "string",
+                                "analyzer" => "ik_smart"
                             ],
                             "logo"                    => [
-                                "type" => "string"
+                                "type"  => "string",
+                                "index" => "not_analyzed"
                             ],
                             "population"              => [
-                                "type" => "string"
+                                "type"  => "string",
+                                "index" => "not_analyzed"
                             ],
                             "job_process_rate_timely" => [
                                 "type" => "integer"
@@ -126,16 +141,20 @@ class ElasticSearchSeeder extends Seeder
                                 "type" => "integer"
                             ],
                             "finance_stage"           => [
-                                "type" => "string"
+                                "type"  => "string",
+                                "index" => "not_analyzed"
                             ],
                             "finance_stage_process"   => [
-                                "type" => "string"
+                                "type"  => "string",
+                                "index" => "not_analyzed"
                             ],
                             "labels"                  => [
-                                "type" => "string"
+                                "type"     => "string",
+                                "analyzer" => "ik_smart"
                             ],
                             "industries"              => [
-                                "type" => "string"
+                                "type"  => "string",
+                                "index" => "not_analyzed"
                             ],
                             "updated_at"              => [
                                 "type"   => "date",
