@@ -92,6 +92,9 @@ class ElasticSearchSeeder extends Seeder
                             "salary_min"        => [
                                 "type" => "integer"
                             ],
+                            "salary_avg"        => [
+                                "type" => "double"
+                            ],
                             "type"              => [
                                 "type"  => "string",
                                 "index" => "not_analyzed"
@@ -181,6 +184,7 @@ class ElasticSearchSeeder extends Seeder
                         '_id'    => $job->id
                     ]
                 ];
+                $job->salary_avg = ($job->salary_min + $job->salary_max) / 2;
                 $params['body'][] = $job;
             }
             $this->es->bulk($params);
