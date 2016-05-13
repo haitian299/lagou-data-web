@@ -11,6 +11,6 @@
 |
 */
 
-Route::get('/', 'HomeController@welcome');
+Route::get('/', ['uses' => 'HomeController@chart', 'as' => 'chart']);
 
-Route::auth();
+Route::get('/api', ['uses' => 'HomeController@api', 'as' => 'api']);
